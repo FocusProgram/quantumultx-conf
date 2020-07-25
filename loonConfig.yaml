@@ -399,6 +399,8 @@ https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Global.list,
 # ZM - Zambia 赞比亚
 # (ZR - Zaire) - See CD Congo, Democratic Republic 扎伊尔
 # ZW - Zimbabwe 津巴布韦
+
+# support tiktok config
 (?<=_region=)CN(?=&) JP 307
 (?<=&app_version=)16..(?=.?.?&) 1 307
 (?<=\?version_code=)16..(?=.?.?&) 1 307
