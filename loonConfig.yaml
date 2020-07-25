@@ -1,0 +1,439 @@
+# Loon全局配置文件
+# Mr.Kong Update By 2020-07-26
+# Github Address(https://github.com/FocusProgram/proxy-conf.git)
+# YouTube去广告请删除hostname 后的.bak
+# GitHub主页(https://github.com/nzw9314)
+# TG通知频道 (https://t.me/nzw9314News)
+
+[General]
+ipv6 = false
+skip-proxy = 10.0.0.0/8,127.0.0.0/8,169.254.0.0/16,192.0.2.0/24,192.168.0.0/16,198.51.100.0/24,224.0.0.0/4,*.local,localhostlocal
+bypass-tun = 10.0.0.0/8,127.0.0.0/8,169.254.0.0/16,192.0.2.0/24,192.168.0.0/16,198.51.100.0/24,224.0.0.0/4
+# [DNS] => DNS 服务器
+dns-server = system,1.2.4.8,119.29.29.29,223.5.5.5
+allow-udp-proxy = true
+host = 127.0.0.1
+
+[Remote Proxy]
+# 订阅节点
+# 别名 = 订阅URL
+✈️机场1 = https://example/server-complete.txt
+✈️机场2 = https://example2/server-complete.txt
+
+[Remote Filter]
+# 筛选订阅节点，筛选后的结果可加入到策略组中，目前支持三种筛选方式
+# NodeSelect: 使用在UI上选择的节点。
+# NameKeyword: 根据提供的关键词对订阅中所有节点的名称进行筛选，使用筛选后的节点。
+# NameRegex: 根据提供的正则表达式对订阅中所有节点的名称进行筛选，使用筛选后的节点。
+𝐏𝐚𝐲𝐏𝐚𝐥 = NodeSelect,✈️机场1,✈️机场2
+𝐍𝐞𝐭𝐟𝐥𝐢𝐱 = NameKeyword,✈️机场1,✈️机场2, FilterKey = Netflix
+🇭🇰香港 = NameRegex,✈️机场1,✈️机场2, FilterKey = 香港|HK
+🇯🇵日本 = NameRegex,✈️机场1,✈️机场2, FilterKey = 日本|JP
+🇰🇷韩国 = NameRegex,✈️机场1,✈️机场2, FilterKey = 韩国|KR
+🇺🇸美国 = NameRegex,✈️机场1,✈️机场2, FilterKey = 美国|US
+Other = NameRegex,✈️机场1,✈️机场2, FilterKey = ^(?!.*(HK|JP|US|KR|香港|日本|韩国|美国)).*$
+
+[Proxy]
+# 本地节点
+
+# 内置 DIRECT、REJECT 策略
+
+# 节点名称 = 协议，服务器地址，服务器端口，加密协议，密码，
+1 = Shadowsocks,1.2.3.4,443,aes-128-gcm,"”password“"
+2 = Shadowsocks,1.2.3.4,443,aes-128-gcm,"”password“"
+3 = ShadowsocksR,1.2.3.4,443,aes-256-cfb,"”password“",auth_aes128_md5,{},tls1.2_ticket_auth,{}
+4 = ShadowsocksR,1.2.3.4,10076,aes-128-cfb,"”password“",auth_aes128_md5,{},tls1.2_ticket_auth,{}
+# vmess
+# 节点名称 = 协议，服务器地址，端口，加密方式，UUID，传输方式:(tcp/ws),path：websocket握手header中的path，host：websocket握手header中的path，over-tls:是否tls，tls-name：远端w服务器域名，skip-cert-verify：是否跳过证书校验（默认否）
+#5 = vmess, 1.2.3.4, 10086, aes-128-gcm,”uuid“,transport:ws,path:/,host:icloud.com,over-tls:true,tls-name:youtTlsServerName.com,skip-cert-verify:false
+
+# 解锁网易云音乐灰色歌曲
+🎧 = http,106.52.127.72,19951
+
+[Proxy Group]
+# 策略组
+
+# 节点选项
+🕹𝐅𝐢𝐧𝐚𝐥 = select,🔰𝐏𝐫𝐨𝐱𝐲,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+🔰𝐏𝐫𝐨𝐱𝐲 = select,♻️𝐀𝐮𝐭𝐨,🌀𝐒𝐞𝐥𝐞𝐜𝐭,🔴𝐅𝐚𝐥𝐥𝐛𝐚𝐜𝐤
+
+# url-test模式，给提供的url发出http header请求，根据返回结果，选择测速最快的节点，默认间隔600s，测速超时时间5s，为了避免资源浪费，建议节点数不要过多，只支持单个节点和远端节点，其他会被忽略
+♻️𝐀𝐮𝐭𝐨 = url-test,🇭🇰香港,🇯🇵日本,🇰🇷韩国,🇺🇸美国,url = http://bing.com/,interval = 600
+
+# select模式,手动选择模式
+🌀𝐒𝐞𝐥𝐞𝐜𝐭 = select,🇭🇰香港,🇯🇵日本,🇰🇷韩国,🇺🇸美国
+
+# fallback模式，和url-test类似，不同的是会根据顺序返回第一个可用的节点，为了避免资源浪费，建议节点数不要过多，只支持单个节点和远端节点，其他会被忽略
+🔴𝐅𝐚𝐥𝐥𝐛𝐚𝐜𝐤 = fallback,🇭🇰香港,🇯🇵日本,🇰🇷韩国,🇺🇸美国,REJECT,url = http://bing.com/,interval = 600
+
+🎵𝐓𝐢𝐤𝐓𝐨𝐤 = select,🔰𝐏𝐫𝐨𝐱𝐲,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+🖥𝐍𝐞𝐭𝐟𝐥𝐢𝐱 = select,𝐍𝐞𝐭𝐟𝐥𝐢𝐱,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+💳𝐏𝐚𝐲𝐏𝐚𝐥 = select,𝐏𝐚𝐲𝐏𝐚𝐥,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+📱𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦 = select,🔰𝐏𝐫𝐨𝐱𝐲,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+🎬𝐘𝐨𝐮𝐓𝐮𝐛𝐞 = select,🔰𝐏𝐫𝐨𝐱𝐲,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+🔞𝐏𝐨𝐫𝐧𝐇𝐮𝐛 = select,🔰𝐏𝐫𝐨𝐱𝐲,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+
+# 🔓网易云音乐灰色歌曲,需要节点支持解锁
+🎧𝐍𝐞𝐭𝐞𝐚𝐬𝐞𝐌𝐮𝐬𝐢𝐜 = select,🎯𝐃𝐢𝐫𝐞𝐜𝐭,🎧,🔰𝐏𝐫𝐨𝐱𝐲
+
+# 网络测速
+🚀𝐒𝐩𝐞𝐞𝐝𝐓𝐞𝐬𝐭 = select,🔰𝐏𝐫𝐨𝐱𝐲,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+
+# 苹果服务
+🍎𝐀𝐩𝐩𝐥𝐞 = select,🎯𝐃𝐢𝐫𝐞𝐜𝐭,🔰𝐏𝐫𝐨𝐱𝐲
+
+# 白名单模式 PROXY，黑名单模式 DIRECT
+
+# 广告拦截
+🚫𝐀𝐝 𝐁𝐥𝐨𝐜𝐤 = select,⛔️𝐑𝐞𝐣𝐞𝐜𝐭,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+
+# 直接连接
+🎯𝐃𝐢𝐫𝐞𝐜𝐭 = select,DIRECT
+
+# 拦截
+⛔️𝐑𝐞𝐣𝐞𝐜𝐭 = select,REJECT
+
+# SSID
+# 别名 = ssid，默认 = 策略， 蜂窝 = 策略， ssid名称 = 策略
+#SSID = ssid, default = PROXY, cellular = DIRECT, ”DivineEngine“ = PROXY
+
+[Rule]
+# 本地规则
+# Type:DOMAIN-SUFFIX,DOMAIN,DOMAIN-KEYWORD,USER-AGENT,URL-REGEX,IP-CIDR
+# Strategy:DIRECT,Proxy,REJECT
+# Options:force-remote-dns(Default:false),no-resolve
+
+#  𝐍𝐞𝐭𝐞𝐚𝐬𝐞𝐌𝐮𝐬𝐢𝐜
+DOMAIN-SUFFIX,music.126.net,DIRECT
+
+# GeoIP China
+GEOIP,CN,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+FINAL, 🕹𝐅𝐢𝐧𝐚𝐥
+
+[Remote Rule]
+
+# 订阅规则
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Liby.list,🚫𝐀𝐝 𝐁𝐥𝐨𝐜𝐤
+# BlockOTA
+https://raw.githubusercontent.com/nzw9314/Surge/master/Ruleset/BlockOTA.list,🚫𝐀𝐝 𝐁𝐥𝐨𝐜𝐤
+# Antirevoke
+https://raw.githubusercontent.com/nzw9314/Surge/master/Ruleset/Antirevoke.list,🚫𝐀𝐝 𝐁𝐥𝐨𝐜𝐤
+# > TikTok
+https://raw.githubusercontent.com/nzw9314/Surge/master/Ruleset/TikTok.list,🎵𝐓𝐢𝐤𝐓𝐨𝐤
+# > Youtube
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Sub/YouTube.list,🎬𝐘𝐨𝐮𝐓𝐮𝐛𝐞
+# > Netflix
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Sub/Netflix.list,🖥𝐍𝐞𝐭𝐟𝐥𝐢𝐱
+# > PronHub
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Sub/Pornhub.list,🔞𝐏𝐨𝐫𝐧𝐇𝐮𝐛
+# Telegram
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Sub/Telegram.list,📱𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦
+# > PayPal
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Sub/PayPal.list,💳𝐏𝐚𝐲𝐏𝐚𝐥
+# > Outlook、Gmail
+https://raw.githubusercontent.com/nzw9314/Surge/master/Ruleset/Mail.list,🔰𝐏𝐫𝐨𝐱𝐲
+# > GoogleDrive
+https://raw.githubusercontent.com/nzw9314/Surge/master/Ruleset/GoogleDrive.list,🔰𝐏𝐫𝐨𝐱𝐲
+# Speedtest
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Sub/Speedtest.list,🚀𝐒𝐩𝐞𝐞𝐝𝐓𝐞𝐬𝐭
+
+# >Unlock NeteaseMusic
+https://raw.githubusercontent.com/nzw9314/Surge/master/Ruleset/UnlockNeteaseMusic.list,🎧𝐍𝐞𝐭𝐞𝐚𝐬𝐞𝐌𝐮𝐬𝐢𝐜
+
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Apple_CDN.list,🍎𝐀𝐩𝐩𝐥𝐞
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Apple_API.list,🍎𝐀𝐩𝐩𝐥𝐞
+
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/AsianMedia.list,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/GlobalMedia.list,🔰𝐏𝐫𝐨𝐱𝐲
+
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Domestic.list,🎯𝐃𝐢𝐫𝐞𝐜𝐭
+https://raw.githubusercontent.com/eHpo1/Rules/master/Surge4/Ruleset/Global.list,🔰𝐏𝐫𝐨𝐱𝐲
+
+[URL Rewrite]
+# 本地重写
+
+# > TikTok Unlock (By Choler)
+# 区域请修改下方国家代码，默认为日本 JP
+# AF - Afghanistan 阿富汗
+# AL - Albania 阿尔巴尼亚
+# DZ - Algeria 阿尔及利亚
+# AS - American Samoa 东萨摩亚
+# AD - Andorra 安道尔
+# AO - Angola 安哥拉
+# Av - Anguilla 安圭拉岛
+# AQ - Antarctica 南极洲
+# AG - Antigua and Barbuda 安提瓜和巴布达
+# AR - Argentina 阿根廷
+# AM - Armenia 亚美尼亚
+# AA - Aruba 阿鲁巴
+# AU - Australia 澳大利亚
+# AT - Austria 奥地利
+# AZ - Azerbaijan 阿塞拜疆
+# BF - Bahamas 巴哈马
+# BH - Bahrain 巴林
+# BB - Barbados 巴巴多斯
+# BD - Bangladesh 孟加拉
+# BY - Belarus 白俄罗斯
+# BE - Belgium 比利时
+# BZ - Belize 伯里兹
+# BJ - Benin 贝宁
+# BM - Bermuda 百慕大
+# BS - Bahamas 巴哈马
+# BT - Bhutan 不丹
+# BW - Botswana 博茨瓦纳
+# BO - Bolivia 玻利维亚
+# BA - Bosnia and Herzegovina 波黑
+# BV - Bouvet Island 布韦岛
+# BR - Brazil 巴西
+# IO - British Indian Ocean Territory 英属印度洋领地
+# BN - Brunei Darussalam 文莱布鲁萨兰
+# BG - Bulgaria 保加利亚
+# BF - Burkina Faso 布基纳法索
+# BI - Burundi 布隆迪
+# KH - Cambodia (Internet) 柬埔寨
+# CB - Cambodia (CIA World Fact Book) 柬埔寨
+# CM - Cameroon 喀麦隆
+# CA - Canada 加拿大
+# CV - Cape Verde 佛得角
+# KY - Cayman Islands 开曼群岛
+# CF - Central African Republic 中非
+# TD - Chad 乍得
+# CL - Chile 智利
+# CN - China 中国
+# CX - Christmas Island 圣诞岛
+# CC - Cocos (Keeling) Islands 可可斯群岛
+# CO - Colombia 哥伦比亚
+# KM - Comoros 科摩罗
+# CG - Congo 刚果
+# CD - Congo, Democratic Republic 刚果
+# CK - Cook Islands 库克群岛
+# CR - Costa Rica 哥斯达黎加
+# CI - Cote DIvoire (Ivory Coast) 象牙海岸
+# HR - Croatia (Hrvatska) 克罗地亚
+# CU - Cuba 古巴
+# CY - Cyprus 塞普路斯
+# CZ - Czech Republic 捷克
+# CS - Czechoslovakia (former) 捷克斯洛伐克
+# DK - Denmark 丹麦
+# DJ - Djibouti 吉布提
+# DM - Dominica 多米尼加共和国
+# DO - Dominican Republic 多米尼加联邦
+# TP - East Timor 东帝汶
+# EC - Ecuador 厄瓜多尔
+# EG - Egypt 埃及
+# SV - El Salvador 萨尔瓦多
+# GQ - Equatorial Guinea 赤道几内亚
+# ER - Eritrea
+# EE - Estonia 爱沙尼亚
+# ET - Ethiopia 埃塞俄比亚
+# FK - Falkland Islands (Malvinas) 福兰克群岛
+# FO - Faroe Islands 法罗群岛
+# FJ - Fiji 斐济
+# FI - Finland 芬兰
+# FR - France 法国
+# FX - France, Metropolitan
+# GF - French Guiana 法属圭亚那
+# PF - French Polynesia 法属玻里尼西亚
+# TF - French Southern Territories 法国南部领地
+# MK - F.Y.R.O.M. (Macedonia)
+# GA - Gabon 加蓬
+# GM - Gambia 冈比亚
+# GE - Georgia 格鲁吉亚
+# DE - Germany 德国
+# GH - Ghana 加纳
+# GI - Gibraltar 直布罗陀
+# GB - Great Britain (UK) 英国
+# GR - Greece 希腊
+# GL - Greenland 格陵兰岛
+# GD - Grenada 格林纳达
+# GP - Guadeloupe 法属德洛普群岛
+# GU - Guam 关岛
+# GT - Guatemala 危地马拉
+# GN - Guinea 几内亚
+# GW - Guinea-Bissau 几内亚比绍
+# GY - Guyana 圭亚那
+# HT - Haiti 海地
+# HM - Heard and McDonald Islands 赫德和麦克唐纳群岛
+# HN - Honduras 洪都拉斯
+# HK - Hong Kong 中国香港特区
+# HU - Hungary 匈牙利
+# IS - Iceland 冰岛
+# IN - India 印度
+# ID - Indonesia 印度尼西亚
+# IR - Iran 伊朗
+# IQ - Iraq 伊拉克
+# IE - Ireland 爱尔兰
+# IL - Israel 以色列
+# IT - Italy 意大利
+# JM - Jamaica 牙买加
+# JP - Japan 日本
+# JO - Jordan 约旦
+# KZ - Kazakhstan 哈萨克斯坦
+# KE - Kenya 肯尼亚
+# KI - Kiribati 基里巴斯
+# KP - Korea (North) 韩国
+# KR - Korea (South) 朝鲜
+# KW - Kuwait 科威特
+# KG - Kyrgyzstan 吉尔吉斯斯坦
+# LA - Laos 老挝
+# LV - Latvia 拉托维亚
+# LB - Lebanon 黎巴嫩
+# LI - Liechtenstein 列支顿士登
+# LR - Liberia 利比里亚
+# LY - Libya 利比亚
+# LS - Lesotho 莱索托
+# LT - Lithuania 立陶宛
+# LU - Luxembourg 卢森堡
+# MO - Macau 中国澳门特区
+# MG - Madagascar 马达加斯加
+# MW - Malawi 马拉维
+# MY - Malaysia 马来西亚
+# MV - Maldives 马尔代夫
+# ML - Mali 马里
+# MT - Malta 马耳他
+# MH - Marshall Islands 马绍尔群岛
+# MQ - Martinique 法属马提尼克群岛
+# MR - Mauritania 毛里塔尼亚
+# MU - Mauritius 毛里求斯
+# YT - Mayotte
+# MX - Mexico 墨西哥
+# FM - Micronesia 米克罗尼西亚
+# MC - Monaco 摩纳哥
+# MD - Moldova 摩尔多瓦
+# MA - Morocco 摩洛哥
+# MN - Mongolia 蒙古
+# MS - Montserrat 蒙塞拉特岛
+# MZ - Mozambique 莫桑比克
+# MM - Myanmar 缅甸
+# NA - Namibia 纳米比亚
+# NR - Nauru 瑙鲁
+# NP - Nepal 尼泊尔
+# NL - Netherlands 荷兰
+# AN - Netherlands Antilles 荷属安德列斯
+# NT - Neutral Zone 中立区（沙特-伊拉克间）
+# NC - New Caledonia 新卡里多尼亚
+# NZ - New Zealand (Aotearoa) 新西兰
+# NI - Nicaragua 尼加拉瓜
+# NE - Niger 尼日尔
+# NG - Nigeria 尼日利亚
+# NU - Niue 纽爱
+# NF - Norfolk Island 诺福克岛
+# MP - Northern Mariana Islands 北马里亚纳群岛
+# NO - Norway 挪威
+# OM - Oman 阿曼
+# PK - Pakistan 巴基斯坦
+# PW - Palau 帕劳
+# PA - Panama 巴拿马
+# PG - Papua New Guinea 巴布亚新几内亚
+# PY - Paraguay 巴拉圭
+# PE - Peru 秘鲁
+# PH - Philippines 菲律宾
+# PN - Pitcairn 皮特克恩岛
+# PL - Poland 波兰
+# PT - Portugal 葡萄牙
+# PR - Puerto Rico 波多黎各
+# QA - Qatar 卡塔尔
+# RE - Reunion 法属尼留旺岛
+# RO - Romania 罗马尼亚
+# RU - Russian Federation 俄罗斯
+# RW - Rwanda 卢旺达
+# GS - S. Georgia and S. Sandwich Isls.
+# KN - Saint Kitts and Nevis 圣基茨和尼维斯
+# LC - Saint Lucia 圣卢西亚
+# VC - Saint Vincent and the Grenadines 圣文森特和格陵纳丁斯
+# WS - Samoa 西萨摩亚
+# SM - San Marino 圣马力诺
+# ST - Sao Tome and Principe 圣多美和普林西比
+# SA - Saudi Arabia 沙特阿拉伯
+# SN - Senegal 塞内加尔
+# SC - Seychelles 塞舌尔
+# SL - Sierra Leone 塞拉利昂
+# SG - Singapore 新加坡
+# SI - Slovenia 斯罗文尼亚
+# SK - Slovak Republic 斯洛伐克
+# Sb - Solomon Islands 所罗门群岛
+# SO - Somalia 索马里
+# ZA - South Africa 南非
+# ES - Spain 西班牙
+# LK - Sri Lanka 斯里兰卡
+# SH - St. Helena
+# PM - St. Pierre and Miquelon 圣皮艾尔和密克隆群岛
+# SD - Sudan 苏丹
+# SR - Suriname 苏里南
+# SJ - Svalbard and Jan Mayen Islands 斯瓦尔巴特和扬马延岛
+# SZ - Swaziland 斯威士兰
+# SE - Sweden 瑞典
+# CH - Switzerland 瑞士
+# SY - Syria 叙利亚
+# TW - Taiwan 中国台湾省
+# TJ - Tajikistan 塔吉克斯坦
+# TZ - Tanzania 坦桑尼亚
+# TH - Thailand 泰国
+# TG - Togo 多哥
+# TK - Tokelau 托克劳群岛
+# TO - Tonga 汤加
+# TT - Trinidad and Tobago 特立尼达和多巴哥
+# TN - Tunisia 突尼斯
+# TR - Turkey 土尔其
+# TM - Turkmenistan 土库曼斯坦
+# TC - Turks and Caicos Islands 特克斯和凯科斯群岛
+# TV - Tuvalu 图瓦卢
+# UG - Uganda 乌干达
+# UA - Ukraine 乌克兰
+# AE - United Arab Emirates 阿联酋
+# UK - United Kingdom 英国
+# US - United States 美国
+# UM - US Minor Outlying Islands 美国海外领地
+# UY - Uruguay 乌拉圭
+# SU - USSR (former) 前苏联
+# UZ - Uzbekistan 乌兹别克斯坦
+# VU - Vanuatu 瓦努阿鲁
+# VA - Vatican City State (Holy See) 梵蒂岗
+# VE - Venezuela 委内瑞拉
+# VN - Viet Nam 越南
+# VG - Virgin Islands (British) 英属维京群岛
+# VI - Virgin Islands (U.S.) 美属维京群岛
+# WF - Wallis and Futuna Islands 瓦里斯和福图纳群岛
+# EH - Western Sahara 西撒哈拉
+# YE - Yemen 也门
+# YU - Yugoslavia 南斯拉夫
+# ZM - Zambia 赞比亚
+# (ZR - Zaire) - See CD Congo, Democratic Republic 扎伊尔
+# ZW - Zimbabwe 津巴布韦
+(?<=_region=)CN(?=&) JP 307
+(?<=&app_version=)16..(?=.?.?&) 1 307
+(?<=\?version_code=)16..(?=.?.?&) 1 307
+
+# > 抖音 去广告&水印
+# 需配合脚本使用
+^https?:\/\/[\w-]+\.amemv\.com\/aweme\/v\d\/feed\/ https://aweme.snssdk.com/aweme/v1/feed/ header
+^https?:\/\/[\w-]+\.amemv\.com\/aweme\/v\d\/aweme\/post\/ https://aweme.snssdk.com/aweme/v1/aweme/post/ header
+^https?:\/\/[\w-]+\.amemv\.com\/aweme\/v\d\/follow\/feed\/ https://aweme.snssdk.com/aweme/v1/follow/feed/ header
+^https?:\/\/[\w-]+\.amemv\.com\/aweme\/v\d\/nearby\/feed\/ https://aweme.snssdk.com/aweme/v1/nearby/feed/ header
+^https?:\/\/[\w-]+\.amemv\.com\/aweme\/v\d\/search\/item\/ https://aweme.snssdk.com/aweme/v1/search/item/ header
+^https?:\/\/[\w-]+\.amemv\.com\/aweme\/v\d\/general\/search\/single\/ https://aweme.snssdk.com/aweme/v1/general/search/single/ header
+^https?:\/\/[\w-]+\.amemv\.com\/aweme\/v\d\/hot/search\/video\/list\/ https://aweme.snssdk.com/aweme/v1/hot/search/video/list/ header
+
+enable = true
+
+[Remote Rewrite]
+#订阅重写 去广告 by eHpo
+# 格式：订阅url，别名(可选)
+https://raw.githubusercontent.com/eHpo1/Rules/master/Loon/Rewrite.conf,eHpo
+https://raw.githubusercontent.com/nzw9314/Loon/master/Q-Search_All_in_one.conf,Q-Search_All_in_one
+[Script]
+# 本地脚本
+enable = true
+
+[Remote Script]
+# 远程脚本
+https://raw.githubusercontent.com/nzw9314/Loon/master/Task.conf,签到
+https://raw.githubusercontent.com/nzw9314/Loon/master/Script.conf,脚本
+https://raw.githubusercontent.com/nzw9314/Loon/master/Cookie.conf,Cookie
+
+[MITM]
+enable = true
+hostname = *.googlevideo.com.bak
+skip-server-cert-verify = true
+ca-p12 = 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
+ca-passphrase = eHpo
