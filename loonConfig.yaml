@@ -17,19 +17,21 @@ host = 127.0.0.1
 [Remote Proxy]
 # 订阅节点
 # 别名 = 订阅URL
+✈️suying = https://example/server-complete.txt
+✈holytech = https://example2/server-complete.txt
 
 [Remote Filter]
 # 筛选订阅节点，筛选后的结果可加入到策略组中，目前支持三种筛选方式
 # NodeSelect: 使用在UI上选择的节点。
 # NameKeyword: 根据提供的关键词对订阅中所有节点的名称进行筛选，使用筛选后的节点。
 # NameRegex: 根据提供的正则表达式对订阅中所有节点的名称进行筛选，使用筛选后的节点。
-𝐏𝐚𝐲𝐏𝐚𝐥 = NodeSelect,✈️机场1,✈️机场2
-𝐍𝐞𝐭𝐟𝐥𝐢𝐱 = NameKeyword,✈️机场1,✈️机场2, FilterKey = Netflix
-🇭🇰香港 = NameRegex,✈️机场1,✈️机场2, FilterKey = 香港|HK
-🇯🇵日本 = NameRegex,✈️机场1,✈️机场2, FilterKey = 日本|JP
-🇰🇷韩国 = NameRegex,✈️机场1,✈️机场2, FilterKey = 韩国|KR
-🇺🇸美国 = NameRegex,✈️机场1,✈️机场2, FilterKey = 美国|US
-Other = NameRegex,✈️机场1,✈️机场2, FilterKey = ^(?!.*(HK|JP|US|KR|香港|日本|韩国|美国)).*$
+𝐏𝐚𝐲𝐏𝐚𝐥 = NodeSelect,✈️suying,✈️holytech
+𝐍𝐞𝐭𝐟𝐥𝐢𝐱 = NameKeyword,✈️suying,✈️holytech, FilterKey = Netflix
+🇭🇰香港 = NameRegex,✈️suying,✈️holytech, FilterKey = 香港|HK
+🇯🇵日本 = NameRegex,✈️suying,✈️holytech, FilterKey = 日本|JP
+🇰🇷韩国 = NameRegex,✈️suying,✈️holytech, FilterKey = 韩国|KR
+🇺🇸美国 = NameRegex,✈️suying,✈️holytech, FilterKey = 美国|US
+Other = NameRegex,✈️suying,✈️holytech, FilterKey = ^(?!.*(HK|JP|US|KR|香港|日本|韩国|美国)).*$
 
 [Proxy]
 # 本地节点
