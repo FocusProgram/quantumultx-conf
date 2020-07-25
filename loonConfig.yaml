@@ -17,7 +17,7 @@ host = 127.0.0.1
 # 订阅节点
 # 别名 = 订阅URL
 ✈️suying = https://example/server-complete.txt
-✈️holytech = https://example2/server-complete.txt
+✈holytech = https://example/server-complete.txt
 
 [Remote Filter]
 # 筛选订阅节点，筛选后的结果可加入到策略组中，目前支持三种筛选方式
